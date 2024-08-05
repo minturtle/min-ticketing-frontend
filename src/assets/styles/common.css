@@ -3,8 +3,25 @@
     --secondary-color: #ffd700;
     --text-color: #ffffff;
     --bg-color: #121212;
+
+
 }
 
+#root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+html {
+    height: 100%;
+    margin: 0;
+}
+
+main {
+    flex: 1;
+    /* 남은 공간을 차지하여 Footer가 하단에 고정되도록 */
+}
 
 body {
     font-family: 'Noto Sans KR', sans-serif;
@@ -19,4 +36,9 @@ body {
     width: 90%;
     max-width: 1200px;
     margin: 0 auto;
+}
+
+a {
+    text-decoration: none;
+    color: white;
 }

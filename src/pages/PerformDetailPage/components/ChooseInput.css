@@ -1,0 +1,166 @@
+.performanceChooseInputWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 300px;
+    margin: 0 auto;
+    background-color: #1c1c1c;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.calendarWrapper {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.react-calendar-custom {
+    width: 100%;
+    background-color: #1c1c1c;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-family: Arial, sans-serif;
+    padding: 10px;
+    font-size: 14px;
+}
+
+.react-calendar-custom .react-calendar__navigation {
+    background-color: #252525;
+    border-radius: 8px 8px 0 0;
+    margin-bottom: 10px;
+}
+
+.react-calendar-custom .react-calendar__navigation button {
+    background-color: #252525;
+    color: #fff;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.react-calendar-custom .react-calendar__navigation button:hover,
+.react-calendar-custom .react-calendar__navigation button:focus {
+    background-color: #333;
+}
+
+.react-calendar-custom .react-calendar__month-view__weekdays {
+    background-color: #252525;
+    color: #ffcf00;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 10px;
+    padding: 5px 0;
+}
+
+.react-calendar-custom .react-calendar__month-view__days__day {
+    padding: 6px;
+    text-align: center;
+}
+
+.react-calendar-custom .react-calendar__tile {
+    background-color: #1c1c1c;
+    color: #fff;
+    border: none;
+}
+
+.react-calendar-custom .react-calendar__tile--active {
+    background-color: #ffcf00 !important;
+    color: #000 !important;
+    border-radius: 4px;
+}
+
+.react-calendar-custom .react-calendar__tile--now {
+    background-color: #333;
+    border: 2px solid #ffcf00;
+    color: #ffcf00;
+    border-radius: 4px;
+}
+
+.react-calendar-custom .react-calendar__month-view__days__day--neighboringMonth {
+    color: #666;
+}
+
+.react-calendar-custom .react-calendar__tile:disabled {
+    color: #888;
+}
+
+.react-calendar-custom .react-calendar__tile:enabled:hover,
+.react-calendar-custom .react-calendar__tile:enabled:focus {
+    background-color: #333;
+    border-radius: 4px;
+}
+
+.selectionInfo {
+    width: 100%;
+    padding: 10px;
+    background-color: #252525;
+    border-radius: 8px;
+    color: #fff;
+}
+
+.dateTimeSelection {
+    margin-bottom: 15px;
+}
+
+.dateTimeSelection p {
+    color: #ffcf00;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.dateTimeSelection select {
+    width: 100%;
+    padding: 5px;
+    margin-top: 5px;
+    background-color: #1c1c1c;
+    color: #fff;
+    border: 1px solid #ffcf00;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+.bookingButton {
+    width: 100%;
+    padding: 10px;
+    background-color: #ffcf00;
+    color: #000;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.bookingButton:hover {
+    background-color: #ffd700;
+}
+
+.selectedDate {
+    margin-top: 10px;
+    color: #ffcf00;
+    font-size: 12px;
+}
+
+.dateInputs {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.dateInputs label {
+    display: flex;
+    flex-direction: column;
+    color: #fff;
+    font-size: 12px;
+}
+
+.dateInputs input {
+    margin-top: 5px;
+    padding: 5px;
+    background-color: #252525;
+    color: #fff;
+    border: 1px solid #ffcf00;
+    border-radius: 4px;
+    font-size: 12px;
+}
