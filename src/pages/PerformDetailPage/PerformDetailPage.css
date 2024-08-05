@@ -1,44 +1,91 @@
-        .performance-container {
-            max-width: 1000px;
-            margin: 100px auto;
-            padding: 20px;
-        }
+.performance-container {
+    max-width: 1200px;
+    /* 전체 컨테이너 너비 증가 */
+    margin: 100px auto;
+    padding: 20px;
+}
 
+h1 {
+    font-size: 24px;
+    margin: 0 0 20px 0;
+}
 
-        h1 {
-            font-size: 24px;
-            margin: 0;
-        }
+.performance-info {
+    display: flex;
+    gap: 30px;
+    /* 간격 증가 */
+    margin-top: 30px;
+    align-items: flex-start;
+}
 
-        .performance-info {
-            display: flex;
-            gap: 30px;
-            margin-top: 30px;
-        }
+.performance-image {
+    flex: 2;
+    /* 이미지 영역 비율 감소 */
+    max-width: 40%;
+    /* 최대 너비 감소 */
+}
 
-        .performance-image {
-            flex: 1;
-        }
+.performance-image img {
+    width: 100%;
+    height: auto;
+    max-height: 500px;
+    /* 최대 높이 감소 */
+    object-fit: cover;
+    /* 이미지 비율 유지하면서 영역 채우기 */
+    border-radius: 8px;
+    /* 이미지 모서리 둥글게 */
+}
 
-        .performance-image img {
-            width: 100%;
-            height: auto;
-        }
+.performance-details {
+    flex: 3;
+    /* 텍스트 영역 비율 증가 */
+}
 
-        .performance-details {
-            flex: 2;
-        }
+.performance-details h2 {
+    font-size: 28px;
+    margin-bottom: 15px;
+}
 
-        .performance-description {
-            margin-top: 30px;
-        }
+.performance-details p {
+    font-size: 16px;
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
 
-        .button {
-            display: inline-block;
-            background-color: #ffd700;
-            color: #121212;
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-        }
+.performance-description {
+    margin-top: 40px;
+}
+
+.performance-description h3 {
+    font-size: 22px;
+    margin-bottom: 15px;
+}
+
+.performance-description p {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.performance-description img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.button {
+    display: inline-block;
+    background-color: #ffd700;
+    color: #121212;
+    padding: 12px 24px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #ffea00;
+}

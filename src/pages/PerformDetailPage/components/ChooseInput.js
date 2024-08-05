@@ -5,9 +5,8 @@ import './ChooseInput.css';
 
 function PerformanceChooseInput({ startDate, endDate }) {
     const [date, setDate] = useState(null);
-    const today = new Date();
+    const [time, setTime] = useState(null);
 
-    // startDate와 endDate를 Date 객체로 변환
     const start = new Date(startDate);
     const end = new Date(endDate);
 
@@ -15,35 +14,53 @@ function PerformanceChooseInput({ startDate, endDate }) {
         setDate(newDate);
     }, []);
 
-    const tileClassName = useCallback(({ date: tileDate, view }) => {
-        if (view === 'month' && date && date.toDateString() === tileDate.toDateString()) {
-            return 'react-calendar__tile--active';
-        }
-    }, [date]);
-
-    const tileDisabled = useCallback(({ date: tileDate, view }) => {
-        if (view === 'month') {
-            return tileDate < start || tileDate > end;
-        }
+    const tileDisabled = useCallback(({ date, view }) => {
+        return view === 'month' && (date < start || date > end);
     }, [start, end]);
 
+    const formatShortWeekday = (locale, date) => {
+        return ['일', '월', '화', '수', '목', '금', '토'][date.getDay()];
+    };
+
+    const formatMonthYear = (locale, date) => {
+        return `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}`;
+    };
+
+    const formatDay = (locale, date) => {
+        return date.getDate();
+    };
+
     return (
-        <div className="calendarWrapper">
-            <div className="todayDate">
-                Today: {today.toDateString()}
+        <div className="performanceChooseInputWrapper">
+            <div className="calendarWrapper">
+                <Calendar
+                    onChange={onChange}
+                    value={date}
+                    className="react-calendar-custom"
+                    tileDisabled={tileDisabled}
+                    minDate={start}
+                    maxDate={end}
+                    formatShortWeekday={formatShortWeekday}
+                    formatMonthYear={formatMonthYear}
+                    formatDay={formatDay}
+                />
             </div>
-            <Calendar
-                onChange={onChange}
-                value={date}
-                className="react-calendar-custom"
-                tileClassName={tileClassName}
-                tileDisabled={tileDisabled}
-                minDate={start}
-                maxDate={end}
-            />
-            {date && <p className="selectedDate">Selected date: {date.toDateString()}</p>}
+            <div className="selectionInfo">
+                {date && (
+                    <div className="dateTimeSelection">
+                        <select onChange={(e) => setTime(e.target.value)}>
+                            <option value="">시간 선택</option>
+                            <option value="14:00">14:00</option>
+                            <option value="19:30">19:30</option>
+                        </select>
+                    </div>
+                )}
+                {date && time && (
+                    <button className="bookingButton">예매하기</button>
+                )}
+            </div>
         </div>
     );
-};
+}
 
 export default PerformanceChooseInput;
