@@ -3,6 +3,7 @@ import HomePage from "./pages/HomePage/HomePage";
 import "./assets/styles/common.css";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import PerformDetailPage from "./pages/PerformDetailPage/PerformDetailPage";
+import MyPage from "./pages/MyPage/MyPage";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/my" element={<MyPage />} />
         <Route path="/performances/:id" element={<PerformDetailPage />} />
       </Routes>
     </Router>
