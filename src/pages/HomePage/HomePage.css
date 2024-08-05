@@ -89,6 +89,11 @@
     transition: transform 0.3s ease;
 }
 
+.performance-card h3 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
 .performance-card:hover {
     transform: translateY(-5px);
 }
