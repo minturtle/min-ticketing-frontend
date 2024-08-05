@@ -21,6 +21,7 @@
     padding: 2rem;
     margin: 2rem 0;
     border-radius: 8px;
+    color: var(--secondary-color);
 }
 
 .filter h2 {
@@ -30,47 +31,38 @@
 
 .filter form {
     display: flex;
-    flex-wrap: wrap;
+    align-items: flex-end;
     gap: 1rem;
+
 }
 
-.filter label {
-    color: var(--text-color);
-    margin-right: 0.5rem;
+.filter form>div {
+    flex: 1;
 }
 
 .filter input,
 .filter select {
+    width: 100%;
+    box-sizing: border-box;
     background-color: var(--primary-color);
     border: 1px solid var(--secondary-color);
     color: var(--text-color);
     padding: 0.5rem;
     border-radius: 4px;
+
 }
 
 .filter button {
+    align-self: flex-end;
+    height: 38px;
     background-color: var(--secondary-color);
-    color: var(--primary-color);
     border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: 700;
-    transition: background-color 0.3s ease;
+    /* 입력 필드의 높이와 맞춤 */
 }
 
-.filter button:hover {
-    background-color: #e6c200;
-}
-
-.price-range {
+.price-input-container {
     display: flex;
-    align-items: center;
     gap: 0.5rem;
-}
-
-.price-input {
-    width: 100px;
 }
 
 .performance-list {
@@ -114,12 +106,12 @@
 }
 
 .performance-info p {
-    margin: 0.25rem 0;
+    margin: 0.25rem 1rem;
 }
 
 .performance-info i {
     color: var(--secondary-color);
-    margin-right: 0.5rem;
+    margin-right: 0.2rem;
 }
 
 @media (max-width: 768px) {
