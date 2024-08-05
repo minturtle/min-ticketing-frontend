@@ -11,7 +11,7 @@ import PerformanceDesc from './components/PerformanceDesc';
 
 function PerformDetailPage() {
     const { id } = useParams();
-    const [performance, setPerformance] = useState(null);
+    const [performance, setPerformance] = useState({ id: '1', title: 'Performance 1', date: '2024-08-01', location: 'Location 1', description: '##### Description 1' });
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
