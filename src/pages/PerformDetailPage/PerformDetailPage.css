@@ -1,4 +1,4 @@
-.performance-container {
+.perform-container {
     max-width: 1200px;
     /* 전체 컨테이너 너비 증가 */
     margin: 100px auto;
@@ -10,7 +10,7 @@ h1 {
     margin: 0 0 20px 0;
 }
 
-.performance-info {
+.perform-info {
     display: flex;
     gap: 30px;
     /* 간격 증가 */
@@ -18,14 +18,14 @@ h1 {
     align-items: flex-start;
 }
 
-.performance-image {
+.perform-image {
     flex: 2;
     /* 이미지 영역 비율 감소 */
     max-width: 40%;
     /* 최대 너비 감소 */
 }
 
-.performance-image img {
+.perform-image img {
     width: 100%;
     height: auto;
     max-height: 500px;
@@ -36,38 +36,38 @@ h1 {
     /* 이미지 모서리 둥글게 */
 }
 
-.performance-details {
+.perform-details {
     flex: 3;
     /* 텍스트 영역 비율 증가 */
 }
 
-.performance-details h2 {
+.perform-details h2 {
     font-size: 28px;
     margin-bottom: 15px;
 }
 
-.performance-details p {
+.perform-details p {
     font-size: 16px;
     margin-bottom: 10px;
     line-height: 1.5;
 }
 
-.performance-description {
+.perform-description {
     margin-top: 40px;
 }
 
-.performance-description h3 {
+.perform-description h3 {
     font-size: 22px;
     margin-bottom: 15px;
 }
 
-.performance-description p {
+.perform-description p {
     font-size: 16px;
     line-height: 1.6;
     margin-bottom: 20px;
 }
 
-.performance-description img {
+.perform-description img {
     max-width: 100%;
     height: auto;
     border-radius: 8px;

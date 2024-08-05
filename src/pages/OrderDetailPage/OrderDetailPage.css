@@ -1,0 +1,108 @@
+.order-container {
+    max-width: 100%;
+    margin: 100px auto;
+    padding: 20px;
+}
+
+.order-detail {
+    background-color: #2a2a2a;
+    padding: 20px;
+    border-radius: 10px;
+    width: 100%;
+}
+
+.performance-info {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.performance-image {
+    width: 100px;
+    height: 100px;
+    margin-right: 20px;
+    object-fit: cover;
+}
+
+.performance-details {
+    flex-grow: 1;
+    min-width: 0;
+    /* 이 부분을 추가 */
+}
+
+.price {
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: right;
+}
+
+.order-summary {
+    background-color: #2a2a2a;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 5px;
+    width: 100%;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.qr-code-container {
+    background-color: #2a2a2a;
+    text-align: center;
+    border-radius: 10px;
+    margin-top: 5px;
+    padding: 20px;
+    width: 100%;
+}
+
+.qr-code {
+    width: 200px;
+    height: 200px;
+}
+
+.performance-details h3 {
+    color: white;
+    margin: 0;
+}
+
+.button-container {
+    background-color: #2a2a2a;
+    text-align: center;
+    border-radius: 10px;
+    margin-top: 5px;
+    padding: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 0 2px;
+    transition: background-color 0.3s;
+}
+
+.btn-back {
+    background-color: #444;
+    color: #fff;
+}
+
+.btn-cancel {
+    background-color: #d9534f;
+    color: #fff;
+}
+
+.btn-back:hover {
+    background-color: #555;
+}
+
+.btn-cancel:hover {
+    background-color: #c9302c;
+}

@@ -4,6 +4,7 @@ import "./assets/styles/common.css";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import PerformDetailPage from "./pages/PerformDetailPage/PerformDetailPage";
 import MyPage from "./pages/MyPage/MyPage";
+import OrderDetailPage from "./pages/OrderDetailPage/OrderDetailPage";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/my" element={<MyPage />} />
         <Route path="/performances/:id" element={<PerformDetailPage />} />
+        <Route path="/orders/:id" element={<OrderDetailPage />} />
       </Routes>
     </Router>
   );
