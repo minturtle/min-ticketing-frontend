@@ -8,7 +8,10 @@ function PerformCard() {
                 <h3>공연 제목</h3>
                 <div class="performance-info">
                     <p><i class="fas fa-map-marker-alt"></i> 서울</p>
-                    <p><i class="far fa-calendar-alt"></i> 2024-08-15</p>
+                    <p><i class="far fa-calendar-alt"></i>
+                        <span>2024-08-15</span><br />
+                        <span>~ 2024-08-20</span>
+                    </p>
                 </div>
             </div>
         </a>
