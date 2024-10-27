@@ -5,6 +5,7 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import CartItem from './components/CartItem';
 import OrderPendingItem from './components/OrderPendingItem';
+import orderService from '../../service/orderService';
 
 function CartPage() {
     const [cartItems, setCartItems] = useState({ data: [] });
@@ -22,25 +23,7 @@ function CartPage() {
         try {
             setIsLoading(true);
 
-            const dummyCartData = {
-                data: [
-                    {
-                        uid: "string",
-                        performanceDateTime: "2024-10-27T12:32:51.460Z",
-                        performanceName: "2024 신년 클래식 콘서트",
-                        performancePrice: 10000,
-                        seatName: "A1"
-                    },
-                    {
-                        uid: "string2",
-                        performanceDateTime: "2024-10-27T12:32:51.460Z",
-                        performanceName: "레미제라블",
-                        performancePrice: 15000,
-                        seatName: "A1"
-                    }
-                ]
-            };
-
+            const cartData = await orderService.getCarts();
             const dummyPendingData = {
                 cursor: null,
                 data: [
@@ -54,7 +37,7 @@ function CartPage() {
                 ]
             };
 
-            setCartItems(dummyCartData);
+            setCartItems(cartData.data);
             setPendingOrders(dummyPendingData);
         } catch (error) {
             console.error('데이터 조회 실패:', error);

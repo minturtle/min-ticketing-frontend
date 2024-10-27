@@ -1,15 +1,4 @@
 export default ({ item, selectedItems, setSelectedItems }) => {
-    const formatDateTime = (dateTimeStr) => {
-        return new Date(dateTimeStr).toLocaleDateString('ko-KR', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
-        });
-    };
-
-
     const handleSelectItem = (uid) => {
         setSelectedItems(prev => {
             const newSelected = new Set(prev);
