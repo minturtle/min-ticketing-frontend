@@ -73,7 +73,7 @@ function ReservationPage() {
                             selectedSeats={selectedSeats}
                             onSeatClick={handleSeatClick}
                         />
-                        <SeatLegend />
+
                     </div>
 
                     {/* 예매 정보 요약 (오른쪽 고정) */}
@@ -84,6 +84,8 @@ function ReservationPage() {
                                 totalPrice={totalPrice}
                                 onReservation={handleReservation}
                             />
+                            <br />
+                            <SeatLegend />
                         </div>
                     </div>
                 </div>
