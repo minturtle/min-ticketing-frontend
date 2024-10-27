@@ -5,6 +5,7 @@ import LoginPage from "./pages/LoginPage/LoginPage";
 import PerformDetailPage from "./pages/PerformDetailPage/PerformDetailPage";
 import MyPage from "./pages/MyPage/MyPage";
 import OrderDetailPage from "./pages/OrderDetailPage/OrderDetailPage";
+import ReservationPage from "./pages/ReservationPage/ReservationPage";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/my" element={<MyPage />} />
         <Route path="/performances/:id" element={<PerformDetailPage />} />
         <Route path="/orders/:id" element={<OrderDetailPage />} />
+        <Route path="/reservation/:id" element={<ReservationPage />} />
       </Routes>
     </Router>
   );
