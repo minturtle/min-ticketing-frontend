@@ -1,8 +1,8 @@
-import axios from "axios"
+import { publicAxios, authAxios } from "../utils/axiosConfig";
 export default {
 
     getList: (cursor) => {
-        return axios.get('http://localhost:8080/api/v2/performances', {
+        return publicAxios.get('/api/v2/performances', {
             params: {
                 cursor: cursor
             },
@@ -13,7 +13,7 @@ export default {
     },
 
     getPerformanceDetail: (uid) => {
-        return axios.get(`http://localhost:8080/api/performances/${uid}`, {
+        return publicAxios.get(`/api/performances/${uid}`, {
             headers: {
                 'accept': '*/*'
             }
@@ -21,11 +21,7 @@ export default {
     },
 
     getSeatsInfo: (performanceUid, dateUid) => {
-        return axios.get(`http://localhost:8080/api/performances/${performanceUid}/dates/${dateUid}`, {
-            headers: {
-                'accept': '*/*'
-            }
-        });
+        return authAxios.get(`/api/performances/${performanceUid}/dates/${dateUid}`);
     }
 
 }

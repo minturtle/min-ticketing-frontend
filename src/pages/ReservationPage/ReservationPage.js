@@ -24,13 +24,27 @@ function ReservationPage() {
     const navigate = useNavigate();
     const { performanceId, dateId } = useParams();
 
-    useEffect(async () => {
-        const reservationData = await performanceService.getSeatsInfo(performanceId, dateId);
+    useEffect(() => {
+        const fetchSeatsData = async () => {
+            try {
+                const response = await performanceService.getSeatsInfo(performanceId, dateId);
+                const reservationData = response.data; // API 응답에서 data 추출
 
-        const { seats: _, ...reservationWithoutSeats } = reservationData;
-        setReservation(reservationWithoutSeats);
-        setSeats(groupSeatsByRow(reservationData.seats))
-    }, [])
+                const { seats: seatsData, ...reservationWithoutSeats } = reservationData;
+                setReservation(reservationWithoutSeats);
+                setSeats(groupSeatsByRow(seatsData));
+            } catch (error) {
+                console.error('Failed to fetch seats:', error);
+                // 에러 처리 (예: 토스트 메시지 표시)
+                setToast({
+                    message: '좌석 정보를 불러오는데 실패했습니다.',
+                    type: 'error'
+                });
+            }
+        };
+
+        fetchSeatsData();
+    }, [performanceId, dateId]);
 
     const disableSeat = () => {
         setSeats(prevSeats =>
