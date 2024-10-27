@@ -6,6 +6,7 @@ import PerformDetailPage from "./pages/PerformDetailPage/PerformDetailPage";
 import MyPage from "./pages/MyPage/MyPage";
 import OrderDetailPage from "./pages/OrderDetailPage/OrderDetailPage";
 import ReservationPage from "./pages/ReservationPage/ReservationPage";
+import CartPage from "./pages/CartPage/CartPage";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/performances/:id" element={<PerformDetailPage />} />
         <Route path="/orders/:id" element={<OrderDetailPage />} />
         <Route path="/reservation/:performanceId/:dateId" element={<ReservationPage />} />
+        <Route path="/cart" element={<CartPage />} />
       </Routes>
     </Router>
   );
