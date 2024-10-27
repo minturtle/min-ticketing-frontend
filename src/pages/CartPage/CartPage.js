@@ -1,19 +1,101 @@
 // pages/CartPage.jsx
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import CartItem from './components/CartItem';
 import OrderPendingItem from './components/OrderPendingItem';
 import orderService from '../../service/orderService';
+import PaymentBar from './components/PaymentBar';
+import OrderModal from './components/OrderModal';
+import { loadTossPayments } from "@tosspayments/tosspayments-sdk";
+
+
 
 function CartPage() {
     const [cartItems, setCartItems] = useState({ data: [] });
     const [pendingOrders, setPendingOrders] = useState({ data: [], cursor: null });
     const [selectedItems, setSelectedItems] = useState(new Set());
     const [isLoading, setIsLoading] = useState(true);
+    const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 추가
 
-    const navigate = useNavigate();
+    const [amount, setAmount] = useState({
+        currency: "KRW",
+        value: 0,
+    });
+
+    const [ready, setReady] = useState(false);
+    const [widgets, setWidgets] = useState(null);
+
+    const clientKey = "test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm"
+    const customerKey = "BeXE6XETWMh5FH8juXY2f";
+
+    useEffect(() => {
+        async function fetchPaymentWidgets() {
+            // ------  결제위젯 초기화 ------
+            const tossPayments = await loadTossPayments(clientKey);
+            // 회원 결제
+            const widgets = tossPayments.widgets({
+                customerKey,
+            });
+            // 비회원 결제
+            // const widgets = tossPayments.widgets({ customerKey: ANONYMOUS });
+
+            setWidgets(widgets);
+        }
+
+        fetchPaymentWidgets();
+    }, [clientKey, customerKey]);
+
+    useEffect(() => {
+        async function renderPaymentWidgets() {
+            if (widgets == null) {
+                return;
+            }
+            // ------ 주문의 결제 금액 설정 ------
+            await widgets.setAmount(amount);
+
+            await Promise.all([
+                // ------  결제 UI 렌더링 ------
+                widgets.renderPaymentMethods({
+                    selector: "#payment-method",
+                    variantKey: "DEFAULT",
+                }),
+                // ------  이용약관 UI 렌더링 ------
+                widgets.renderAgreement({
+                    selector: "#agreement",
+                    variantKey: "AGREEMENT",
+                }),
+            ]);
+
+            setReady(true);
+        }
+
+        renderPaymentWidgets();
+    }, [widgets, amount]);
+
+    useEffect(() => {
+        if (widgets == null) {
+            return;
+        }
+
+        widgets.setAmount(amount);
+    }, [widgets]);
+
+    useEffect(() => {
+        setAmount(prev => ({
+            ...prev,
+            value: getTotalPrice(),
+        }))
+    }, [selectedItems])
+
+    const openModal = () => {
+        setIsModalOpen(true); // 모달 열기
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false); // 모달 닫기
+    };
+
 
     useEffect(() => {
         fetchData();
@@ -120,33 +202,18 @@ function CartPage() {
 
             {/* 하단 결제 바 */}
             {selectedItems.size > 0 && (
-                <div className="fixed bottom-0 left-0 right-0 bg-neutral-900 border-t border-neutral-700 p-4">
-                    <div className="max-w-6xl mx-auto flex items-center justify-between">
-                        <div>
-                            <span className="text-gray-400 mr-2">선택한 상품:</span>
-                            <span className="font-bold">{selectedItems.size}개</span>
-                        </div>
-                        <div className="flex items-center gap-8">
-                            <div>
-                                <span className="text-gray-400 mr-2">총 결제금액:</span>
-                                <span className="text-xl font-bold text-yellow-400">
-                                    {getTotalPrice().toLocaleString()}원
-                                </span>
-                            </div>
-                            <button
-                                onClick={() => navigate('/payment', {
-                                    state: { items: cartItems.data.filter(item => selectedItems.has(item.uid)) }
-                                })}
-                                className="px-8 py-3 bg-yellow-400 text-black rounded-lg font-bold hover:bg-yellow-300 transition-colors"
-                            >
-                                결제하기
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                <PaymentBar selectedItems={selectedItems} price={getTotalPrice()} openModal={openModal} />
             )}
+
+            {/* 모달 창 */}
+            <OrderModal isModalOpen={isModalOpen} widgets={widgets} ready={ready} closeModal={closeModal} />
+
+
+
             <Footer />
         </div>
-    );
+    )
 }
+
+
 export default CartPage;
