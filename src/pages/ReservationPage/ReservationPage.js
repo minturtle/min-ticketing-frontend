@@ -8,6 +8,8 @@ import SeatMap from './components/SeatMap';
 import SeatLegend from './components/SeatLegend';
 import ReservationSummary from './components/ReservationSummary';
 import Toast from '../../components/Toast';
+import performanceService from '../../service/performanceService';
+
 
 function ReservationPage() {
     const [selectedSeat, setSelectedSeat] = useState(null);
@@ -22,41 +24,12 @@ function ReservationPage() {
     const navigate = useNavigate();
     const { performanceId, dateId } = useParams();
 
-    // 예시 데이터 (실제로는 API로 받아올 것입니다)
-    const reservationData = {
-        dateUid: dateId,
-        pricePerSeat: 50000,
-        seats: [
-            [
-                { uid: "A1", name: "A1", isReserved: false },
-                { uid: "A2", name: "A2", isReserved: true }
-            ],
-            [
-                { uid: "B1", name: "B1", isReserved: false },
-                { uid: "B2", name: "B2", isReserved: false }
-            ]
-        ]
-    };
-
-    useEffect(() => {
-        const reservationData = {
-            dateUid: dateId,
-            pricePerSeat: 50000,
-            seats: [
-                [
-                    { uid: "A1", name: "A1", isReserved: false },
-                    { uid: "A2", name: "A2", isReserved: true }
-                ],
-                [
-                    { uid: "B1", name: "B1", isReserved: false },
-                    { uid: "B2", name: "B2", isReserved: false }
-                ]
-            ]
-        };
+    useEffect(async () => {
+        const reservationData = await performanceService.getSeatsInfo(performanceId, dateId);
 
         const { seats: _, ...reservationWithoutSeats } = reservationData;
         setReservation(reservationWithoutSeats);
-        setSeats(reservationData.seats)
+        setSeats(groupSeatsByRow(reservationData.seats))
     }, [])
 
     const disableSeat = () => {
@@ -89,7 +62,7 @@ function ReservationPage() {
             return;
         }
 
-        const selectedSeatData = reservationData.seats
+        const selectedSeatData = seats
             .flat()
             .find(seat => seat.name === selectedSeat);
 
@@ -167,5 +140,35 @@ function ReservationPage() {
         </div>
     );
 }
+
+// A1, A2 형식의 좌석을 행별로 그룹화하는 유틸리티 함수
+function groupSeatsByRow(seats) {
+    // 1차원 배열을 행 이름으로 그룹화
+    const seatsByRow = seats.reduce((acc, row) => {
+        row.forEach(seat => {
+            const rowName = seat.name.charAt(0); // 'A'1에서 'A' 추출
+            if (!acc[rowName]) {
+                acc[rowName] = [];
+            }
+            acc[rowName].push(seat);
+        });
+        return acc;
+    }, {});
+
+    // 각 행의 좌석을 번호순으로 정렬
+    Object.keys(seatsByRow).forEach(rowName => {
+        seatsByRow[rowName].sort((a, b) => {
+            const aNum = parseInt(a.name.slice(1));
+            const bNum = parseInt(b.name.slice(1));
+            return aNum - bNum;
+        });
+    });
+
+    // 행 이름 순으로 정렬된 2차원 배열 반환
+    return Object.keys(seatsByRow)
+        .sort()
+        .map(rowName => seatsByRow[rowName]);
+};
+
 
 export default ReservationPage;

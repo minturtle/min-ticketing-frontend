@@ -18,6 +18,14 @@ export default {
                 'accept': '*/*'
             }
         });
+    },
+
+    getSeatsInfo: (performanceUid, dateUid) => {
+        return axios.get(`http://localhost:8080/api/performances/${performanceUid}/dates/${dateUid}`, {
+            headers: {
+                'accept': '*/*'
+            }
+        });
     }
 
 }
