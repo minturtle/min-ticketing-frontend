@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-function PerformanceChooseInput({ dateInfo }) {
+function PerformanceChooseInput({ performanceId, dateInfo }) {
     const [selectedDate, setSelectedDate] = useState(null);
     const navigate = useNavigate();
 
@@ -22,7 +22,7 @@ function PerformanceChooseInput({ dateInfo }) {
 
     const handleReservation = () => {
         if (selectedDate) {
-            navigate(`/reservation/${selectedDate}`);
+            navigate(`/reservation/${performanceId}/${selectedDate}`);
         }
     };
 

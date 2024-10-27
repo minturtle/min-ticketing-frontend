@@ -1,5 +1,5 @@
 // components/SeatMap.jsx
-function SeatMap({ seats, selectedSeats, onSeatClick }) {
+function SeatMap({ seats, selectedSeat, onSeatClick }) {
     return (
         <div className="mb-12">
             <div className="grid gap-3 justify-center">
@@ -15,7 +15,7 @@ function SeatMap({ seats, selectedSeats, onSeatClick }) {
                                     transition-colors duration-200
                                     ${seat.isReserved
                                         ? 'bg-neutral-700 text-neutral-500 cursor-not-allowed'
-                                        : selectedSeats.has(seat.uid)
+                                        : selectedSeat === seat.name
                                             ? 'bg-yellow-400 text-black'
                                             : 'bg-neutral-800 text-white hover:bg-neutral-700'
                                     }

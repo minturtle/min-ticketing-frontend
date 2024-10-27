@@ -40,7 +40,7 @@ function PerformanceInfo({ performanceData }) {
                     <strong>가격:</strong> {formatPrice(performanceData.price)}원
                 </p>
             </div>
-            <PerformanceChooseInput dateInfo={performanceData.dateInfo} />
+            <PerformanceChooseInput performanceId={performanceData.uid} dateInfo={performanceData.dateInfo} />
         </div>
     )
 }
