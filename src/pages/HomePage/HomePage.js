@@ -3,7 +3,6 @@ import Header from '../../components/Header';
 import Filter from './components/Filter';
 import Hero from './components/Hero';
 import PerformList from './components/PerformList';
-import './HomePage.css';
 
 function HomePage() {
     return (
