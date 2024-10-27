@@ -4,8 +4,6 @@ import SignupForm from "./components/SignupForm";
 import React, { useState } from 'react';
 
 import Tabs from "./components/Tabs";
-import "./LoginPage.css";
-
 
 function LoginPage() {
     const [activeTab, setActiveTab] = useState('login');
@@ -17,14 +15,13 @@ function LoginPage() {
     return (
         <>
             <Header />
-            <div className="loginContainer">
+            <div className="bg-neutral-900 p-8 rounded-lg shadow-lg w-full max-w-[400px] mx-auto mt-[100px]">
                 <Tabs activeTab={activeTab} onTabChange={handleTabChange} />
                 {activeTab === 'login' && <LoginForm />}
                 {activeTab === 'signup' && <SignupForm />}
             </div>
         </>
     );
-
 }
 
 export default LoginPage

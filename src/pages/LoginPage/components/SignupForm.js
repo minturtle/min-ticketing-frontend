@@ -25,17 +25,24 @@ function SignupForm() {
 }
 
 function Step1Form({ setStep }) {
-    const handleSendVerificationCode = () => {
-        setStep(2);
-    };
-
     return (
         <div id="signup-step1">
-            <div className="form-group">
-                <label htmlFor="signup-email">이메일</label>
-                <input type="email" id="signup-email" required />
+            <div className="mb-6">
+                <label htmlFor="signup-email" className="block mb-2">이메일</label>
+                <input
+                    type="email"
+                    id="signup-email"
+                    required
+                    className="w-full p-2 border border-neutral-600 bg-neutral-800 text-white rounded"
+                />
             </div>
-            <button type="button" className="btn" onClick={handleSendVerificationCode}>인증 코드 발송</button>
+            <button
+                type="button"
+                className="w-full py-3 bg-yellow-400 text-neutral-900 rounded font-bold hover:bg-yellow-300 transition-colors duration-300"
+                onClick={() => setStep(2)}
+            >
+                인증 코드 발송
+            </button>
         </div>
     )
 }
@@ -84,18 +91,27 @@ function Step2Form({ setStep }) {
 
     return (
         <div id="signup-step2">
-            <div className="form-group">
-                <label htmlFor="verification-code">인증 코드</label>
-                <input type="text" id="verification-code" required />
+            <div className="mb-6">
+                <label htmlFor="verification-code" className="block mb-2">인증 코드</label>
+                <input
+                    type="text"
+                    id="verification-code"
+                    required
+                    className="w-full p-2 border border-neutral-600 bg-neutral-800 text-white rounded"
+                />
             </div>
-            <button type="button" className="btn" onClick={handleVerifyCode}>
+            <button
+                type="button"
+                className="w-full py-3 bg-yellow-400 text-neutral-900 rounded font-bold hover:bg-yellow-300 transition-colors duration-300"
+                onClick={() => setStep(3)}
+            >
                 코드 확인
             </button>
-            <div>
+            <div className="text-center mt-4">
                 {isDisabled ? (
                     <p>이메일 재전송 가능 시간: {formatTime(timer)}</p>
                 ) : (
-                    <p onClick={handleResendEmail} style={{ cursor: 'pointer' }}>
+                    <p onClick={handleResendEmail} className="cursor-pointer text-yellow-400 hover:text-yellow-300">
                         이메일 재전송하기
                     </p>
                 )}
@@ -103,22 +119,44 @@ function Step2Form({ setStep }) {
         </div>
     );
 }
+
+
 function Step3Form() {
     return (
         <div id="signup-step3">
-            <div className="form-group">
-                <label htmlFor="signup-password">비밀번호</label>
-                <input type="password" id="signup-password" required />
+            <div className="mb-6">
+                <label htmlFor="signup-password" className="block mb-2">비밀번호</label>
+                <input
+                    type="password"
+                    id="signup-password"
+                    required
+                    className="w-full p-2 border border-neutral-600 bg-neutral-800 text-white rounded"
+                />
             </div>
-            <div className="form-group">
-                <label htmlFor="signup-confirm-password">비밀번호 확인</label>
-                <input type="password" id="signup-confirm-password" required />
+            <div className="mb-6">
+                <label htmlFor="signup-confirm-password" className="block mb-2">비밀번호 확인</label>
+                <input
+                    type="password"
+                    id="signup-confirm-password"
+                    required
+                    className="w-full p-2 border border-neutral-600 bg-neutral-800 text-white rounded"
+                />
             </div>
-            <div className="form-group">
-                <label htmlFor="signup-nickname">닉네임</label>
-                <input type="text" id="signup-nickname" required />
+            <div className="mb-6">
+                <label htmlFor="signup-nickname" className="block mb-2">닉네임</label>
+                <input
+                    type="text"
+                    id="signup-nickname"
+                    required
+                    className="w-full p-2 border border-neutral-600 bg-neutral-800 text-white rounded"
+                />
             </div>
-            <button type="submit" className="btn">회원가입 완료</button>
+            <button
+                type="submit"
+                className="w-full py-3 bg-yellow-400 text-neutral-900 rounded font-bold hover:bg-yellow-300 transition-colors duration-300"
+            >
+                회원가입 완료
+            </button>
         </div>
     )
 }
