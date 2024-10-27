@@ -1,64 +1,72 @@
-import React, { useState, useCallback } from 'react';
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
-import './ChooseInput.css';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+function PerformanceChooseInput({ dateInfo }) {
+    const [selectedDate, setSelectedDate] = useState(null);
+    const navigate = useNavigate();
 
-function PerformanceChooseInput({ startDate, endDate }) {
-    const [date, setDate] = useState(null);
-    const [time, setTime] = useState(null);
-
-    const start = new Date(startDate);
-    const end = new Date(endDate);
-
-    const onChange = useCallback((newDate) => {
-        setDate(newDate);
-    }, []);
-
-    const tileDisabled = useCallback(({ date, view }) => {
-        return view === 'month' && (date < start || date > end);
-    }, [start, end]);
-
-    const formatShortWeekday = (locale, date) => {
-        return ['일', '월', '화', '수', '목', '금', '토'][date.getDay()];
+    const formatDate = (dateTimeStr) => {
+        const date = new Date(dateTimeStr);
+        return {
+            date: date.toLocaleDateString('ko-KR', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                weekday: 'short'
+            }),
+            time: date.toLocaleTimeString('ko-KR', {
+                hour: '2-digit',
+                minute: '2-digit'
+            }),
+        }
     };
 
-    const formatMonthYear = (locale, date) => {
-        return `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}`;
-    };
-
-    const formatDay = (locale, date) => {
-        return date.getDate();
+    const handleReservation = () => {
+        if (selectedDate) {
+            navigate(`/reservation/${selectedDate}`);
+        }
     };
 
     return (
-        <div className="performanceChooseInputWrapper">
-            <div className="calendarWrapper">
-                <Calendar
-                    onChange={onChange}
-                    value={date}
-                    className="react-calendar-custom"
-                    tileDisabled={tileDisabled}
-                    minDate={start}
-                    maxDate={end}
-                    formatShortWeekday={formatShortWeekday}
-                    formatMonthYear={formatMonthYear}
-                    formatDay={formatDay}
-                />
+        <div className="flex flex-col max-w-[300px] mx-auto bg-neutral-900 p-5 rounded-lg">
+            <h3 className="text-lg font-bold mb-4 text-white text-center">날짜/시간 선택</h3>
+
+            <div className="space-y-2">
+                {dateInfo.map((info) => {
+                    const { date, time } = formatDate(info.dateTime);
+                    return (
+                        <button
+                            key={info.uid}
+                            className={`w-full p-3 rounded-lg border transition-all ${selectedDate === info.uid
+                                ? 'bg-yellow-400 text-neutral-900 border-yellow-400'
+                                : 'bg-neutral-800 text-white border-neutral-700 hover:border-yellow-400'
+                                }`}
+                            onClick={() => setSelectedDate(info.uid)}
+                        >
+                            <div className="flex flex-col items-start">
+                                <span className="text-sm font-medium">{date}</span>
+                                <div className="flex justify-between w-full mt-1">
+                                    <span className="text-sm">{time}</span>
+                                    <span className={`text-sm ${selectedDate === info.uid ? 'text-neutral-900' : 'text-yellow-400'
+                                        }`}>
+                                        {info.remaining}/{info.total}석
+                                    </span>
+                                </div>
+                            </div>
+                        </button>
+                    );
+                })}
             </div>
-            <div className="selectionInfo">
-                {date && (
-                    <div className="dateTimeSelection">
-                        <select onChange={(e) => setTime(e.target.value)}>
-                            <option value="">시간 선택</option>
-                            <option value="14:00">14:00</option>
-                            <option value="19:30">19:30</option>
-                        </select>
-                    </div>
-                )}
-                {date && time && (
-                    <button className="bookingButton">예매하기</button>
-                )}
-            </div>
+
+            <button
+                onClick={handleReservation}
+                disabled={!selectedDate}
+                className={`mt-4 py-3 px-4 rounded-lg font-bold text-sm transition-colors ${selectedDate
+                    ? 'bg-yellow-400 text-neutral-900 hover:bg-yellow-300'
+                    : 'bg-neutral-700 text-neutral-400 cursor-not-allowed'
+                    }`}
+            >
+                예매하기
+            </button>
         </div>
     );
 }

@@ -3,8 +3,8 @@ import Markdown from "react-markdown"
 
 function PerformanceDesc({ description }) {
     return (
-        <div class="performance-description">
-            <Markdown>
+        <div className="mt-10">
+            <Markdown className="prose prose-invert max-w-none">
                 {description}
             </Markdown>
         </div>

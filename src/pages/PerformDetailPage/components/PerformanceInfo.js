@@ -1,23 +1,48 @@
 import PerformanceChooseInput from './ChooseInput';
 
-function PerformanceInfo() {
+function PerformanceInfo({ performanceData }) {
+    console.log(performanceData)
+    const formatPrice = (price) => {
+        return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    };
+
+    const formatDateRange = (dateInfo) => {
+        if (!dateInfo || dateInfo.length === 0) return "";
+
+        const dates = dateInfo.map(info => new Date(info.dateTime));
+        const startDate = new Date(Math.min(...dates));
+        const endDate = new Date(Math.max(...dates));
+
+        return `${startDate.toLocaleDateString('ko-KR')} ~ ${endDate.toLocaleDateString('ko-KR')}`;
+    };
+
     return (
-        <div class="perform-info">
-            <div class="perform-image">
-                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='400' viewBox='0 0 300 400'%3E%3Crect width='300' height='400' fill='%232a2a2a'/%3E%3Ctext x='50%25' y='50%25' font-size='24' text-anchor='middle' fill='%23ffffff' dy='.3em'%3E공연 이미지%3C/text%3E%3C/svg%3E" alt="공연 이미지" />
+        <div className="flex gap-8 mt-8 items-start">
+            <div className="flex-2 max-w-[40%]">
+                <img
+                    src={performanceData.image}
+                    alt={`${performanceData.title} 공연 이미지`}
+                    className="w-full h-auto max-h-[500px] object-cover rounded-lg"
+                    onError={(e) => {
+                        e.target.src = "https://via.placeholder.com/400x600?text=No+Image";
+                    }}
+                />
             </div>
-            <div class="perform-details">
-                <h2>공연 제목</h2>
-                <p><strong>날짜:</strong> 2024년 8월 15일 ~ 2024년 8월 20일</p>
-                <p><strong>장소:</strong> 서울 예술의 전당 콘서트홀</p>
-                <p><strong>가격:</strong> 100000원</p>
+            <div className="flex-3">
+                <h2 className="text-3xl mb-4">{performanceData.title}</h2>
+                <p className="text-base mb-2.5 leading-relaxed">
+                    <strong>날짜:</strong> {formatDateRange(performanceData.dateInfo)}
+                </p>
+                <p className="text-base mb-2.5 leading-relaxed">
+                    <strong>장소:</strong> {performanceData.region} {performanceData.place}
+                </p>
+                <p className="text-base mb-2.5 leading-relaxed">
+                    <strong>가격:</strong> {formatPrice(performanceData.price)}원
+                </p>
             </div>
-            <PerformanceChooseInput startDate="2024-08-15" endDate="2024-08-20" />
+            <PerformanceChooseInput dateInfo={performanceData.dateInfo} />
         </div>
-
-
     )
-
 }
 
 
