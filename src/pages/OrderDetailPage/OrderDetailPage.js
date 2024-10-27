@@ -1,5 +1,4 @@
 import { useParams } from 'react-router-dom'
-import "./OrderDetailPage.css"
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import OrderPerformanceInfo from './components/OrderPerformanceInfo';
@@ -14,20 +13,16 @@ function OrderDetailPage() {
     return (
         <>
             <Header />
-            <div className='order-container'>
+            <div className="max-w-full mx-auto mt-[100px] p-5">
                 <main>
                     <OrderPerformanceInfo />
                     <OrderSummary />
                     <QRContainer />
                     <ButtonContainer />
                 </main>
-
             </div>
-
             <Footer />
         </>
-
-
     )
 }
 
