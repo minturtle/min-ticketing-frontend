@@ -56,8 +56,7 @@ function ReservationPage() {
                 )
             )
         );
-        setSelectedSeat(null); // 선택 해제
-        console.log('After update:', reservation.seats);
+        setSelectedSeat(null);
     }
 
     const handleSeatClick = (seat) => {
@@ -86,35 +85,36 @@ function ReservationPage() {
         }
 
         try {
-            const response = await fetch(
-                `https://minturtle.kro.kr/api/reservations/${performanceId}/dates/${dateId}/seats/${selectedSeatData.uid}`,
-                {
-                    method: 'POST',
-                    headers: {
-                        'accept': '*/*',
-                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                    },
-                }
+            const response = await performanceService.reserveSeat(
+                performanceId,
+                dateId,
+                selectedSeatData.uid
             );
 
-            if (response.status === 201) {
+            // axios는 2xx 상태 코드일 때 성공으로 처리
+            setToast({
+                message: '예매가 완료되었습니다!',
+                type: 'success'
+            });
+            disableSeat();
+
+        } catch (error) {
+            if (error.response?.status === 409) {
                 setToast({
-                    message: '예매가 완료되었습니다!',
-                    type: 'success'
+                    message: error.response.data.message || '이미 예약된 좌석입니다.',
+                    type: 'error'
                 });
                 disableSeat();
-
-            } else if (response.status === 409) {
-                const data = await response.json();
-                setToast({ message: data.message, type: 'error' });
-                disableSeat();
             } else {
-                throw new Error('예약 중 오류가 발생했습니다.');
+                setToast({
+                    message: '예약 중 오류가 발생했습니다.',
+                    type: 'error'
+                });
             }
-        } catch (error) {
-            setToast({ message: error.message, type: 'error' });
+            console.error('Reservation error:', error);
         }
     };
+
 
     return (
         <div className="min-h-screen flex flex-col">

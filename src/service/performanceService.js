@@ -22,6 +22,12 @@ export default {
 
     getSeatsInfo: (performanceUid, dateUid) => {
         return authAxios.get(`/api/performances/${performanceUid}/dates/${dateUid}`);
+    },
+
+    reserveSeat: (performanceId, dateId, seatUid) => {
+        return authAxios.post(
+            `/api/reservations/${performanceId}/dates/${dateId}/seats/${seatUid}`,
+        );
     }
 
 }
