@@ -7,6 +7,7 @@ import MyPage from "./pages/MyPage/MyPage";
 import OrderDetailPage from "./pages/OrderDetailPage/OrderDetailPage";
 import ReservationPage from "./pages/ReservationPage/ReservationPage";
 import CartPage from "./pages/CartPage/CartPage";
+import OrderSuccessPage from "./pages/CartPage/SuccessPage";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/orders/:id" element={<OrderDetailPage />} />
         <Route path="/reservation/:performanceId/:dateId" element={<ReservationPage />} />
         <Route path="/cart" element={<CartPage />} />
+        <Route path="/order/success" element={<OrderSuccessPage />} />
       </Routes>
     </Router>
   );

@@ -90,12 +90,12 @@ function OrderModal({ isModalOpen, closeModal, price, count, carts }) {
 
     const doOrder = async () => {
         try {
-            const orderInfo = await orderService.createCartInfo([...carts])
+            const orderInfo = await orderService.createOrderInfo([...carts])
             await widgets.requestPayment({
                 orderId: orderInfo.data.orderId,
                 orderName: `공연 좌석 ${count}건`,
-                successUrl: window.location.origin + "/success",
-                failUrl: window.location.origin + "/fail",
+                successUrl: window.location.origin + "/order/success",
+                failUrl: window.location.origin + "/order/fail",
             });
         } catch (error) {
             // 에러 처리하기

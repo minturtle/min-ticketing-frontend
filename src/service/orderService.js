@@ -5,7 +5,7 @@ export default {
         return authAxios.get("/api/orders/carts")
     },
 
-    createCartInfo: (cartUidList) => {
+    createOrderInfo: (cartUidList) => {
         return authAxios.post('/api/orders/toss/info', {
             cartUidList: cartUidList
         }, {
@@ -14,7 +14,21 @@ export default {
                 'accept': '*/*'
             }
         });
-    }
+    },
 
+    confirmOrder: ({ paymentType, orderId, paymentKey, amount }) => {
+        return authAxios.post('/api/orders/toss/confirm', {
+            paymentType: paymentType,
+            orderId: orderId,
+            paymentKey: paymentKey,
+            amount: amount
+        }, {
+            headers: {
+                'Content-Type': 'application/json',
+                'accept': '*/*'
+            }
+        });
+
+    }
 
 }

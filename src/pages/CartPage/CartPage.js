@@ -8,7 +8,6 @@ import PaymentBar from './components/PaymentBar';
 import OrderModal from './components/OrderModal';
 
 
-
 function CartPage() {
     const [cartItems, setCartItems] = useState({ data: [] });
     const [selectedItems, setSelectedItems] = useState(new Set());
