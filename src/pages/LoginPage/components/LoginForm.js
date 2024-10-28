@@ -82,11 +82,11 @@ function LoginForm() {
                 {loading ? '로그인 중...' : '로그인'}
             </button>
 
-            <div className="text-center my-4 text-gray-400">또는</div>
+            {/* <div className="text-center my-4 text-gray-400">또는</div>
 
             <button type="button" className="w-full py-3 bg-blue-600 text-white rounded font-bold hover:bg-blue-700 transition-colors duration-300">
                 <i className="fab fa-google mr-2"></i> Google로 로그인
-            </button>
+            </button> */}
         </form>
     );
 }
