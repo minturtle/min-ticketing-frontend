@@ -7,7 +7,6 @@ import OrderPendingItem from './components/OrderPendingItem';
 import orderService from '../../service/orderService';
 import PaymentBar from './components/PaymentBar';
 import OrderModal from './components/OrderModal';
-import { loadTossPayments } from "@tosspayments/tosspayments-sdk";
 
 
 
@@ -17,75 +16,40 @@ function CartPage() {
     const [selectedItems, setSelectedItems] = useState(new Set());
     const [isLoading, setIsLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 추가
-
-    const [amount, setAmount] = useState({
-        currency: "KRW",
-        value: 0,
-    });
-
-    const [ready, setReady] = useState(false);
-    const [widgets, setWidgets] = useState(null);
-
-    const clientKey = "test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm"
-    const customerKey = "BeXE6XETWMh5FH8juXY2f";
+    const [price, setPrice] = useState(10);
 
     useEffect(() => {
-        async function fetchPaymentWidgets() {
-            // ------  결제위젯 초기화 ------
-            const tossPayments = await loadTossPayments(clientKey);
-            // 회원 결제
-            const widgets = tossPayments.widgets({
-                customerKey,
-            });
-            // 비회원 결제
-            // const widgets = tossPayments.widgets({ customerKey: ANONYMOUS });
+        const fetchData = async () => {
+            try {
+                setIsLoading(true);
 
-            setWidgets(widgets);
-        }
+                const cartData = await orderService.getCarts();
+                const dummyPendingData = {
+                    cursor: null,
+                    data: [
+                        {
+                            uid: "pending1",
+                            name: "재즈 페스티벌 2024",
+                            performanceImage: "https://via.placeholder.com/300x200.png?text=Jazz+Festival",
+                            totalPrice: 80000,
+                            orderedTime: "2024-01-17T10:00:00.000Z"
+                        }
+                    ]
+                };
 
-        fetchPaymentWidgets();
-    }, [clientKey, customerKey]);
-
-    useEffect(() => {
-        async function renderPaymentWidgets() {
-            if (widgets == null) {
-                return;
+                setCartItems(cartData.data);
+                setPendingOrders(dummyPendingData);
+            } catch (error) {
+                console.error('데이터 조회 실패:', error);
+            } finally {
+                setIsLoading(false);
             }
-            // ------ 주문의 결제 금액 설정 ------
-            await widgets.setAmount(amount);
-
-            await Promise.all([
-                // ------  결제 UI 렌더링 ------
-                widgets.renderPaymentMethods({
-                    selector: "#payment-method",
-                    variantKey: "DEFAULT",
-                }),
-                // ------  이용약관 UI 렌더링 ------
-                widgets.renderAgreement({
-                    selector: "#agreement",
-                    variantKey: "AGREEMENT",
-                }),
-            ]);
-
-            setReady(true);
-        }
-
-        renderPaymentWidgets();
-    }, [widgets, amount]);
+        };
+        fetchData()
+    }, [])
 
     useEffect(() => {
-        if (widgets == null) {
-            return;
-        }
-
-        widgets.setAmount(amount);
-    }, [widgets]);
-
-    useEffect(() => {
-        setAmount(prev => ({
-            ...prev,
-            value: getTotalPrice(),
-        }))
+        setPrice(getTotalPrice())
     }, [selectedItems])
 
     const openModal = () => {
@@ -96,37 +60,6 @@ function CartPage() {
         setIsModalOpen(false); // 모달 닫기
     };
 
-
-    useEffect(() => {
-        fetchData();
-    }, []);
-
-    const fetchData = async () => {
-        try {
-            setIsLoading(true);
-
-            const cartData = await orderService.getCarts();
-            const dummyPendingData = {
-                cursor: null,
-                data: [
-                    {
-                        uid: "pending1",
-                        name: "재즈 페스티벌 2024",
-                        performanceImage: "https://via.placeholder.com/300x200.png?text=Jazz+Festival",
-                        totalPrice: 80000,
-                        orderedTime: "2024-01-17T10:00:00.000Z"
-                    }
-                ]
-            };
-
-            setCartItems(cartData.data);
-            setPendingOrders(dummyPendingData);
-        } catch (error) {
-            console.error('데이터 조회 실패:', error);
-        } finally {
-            setIsLoading(false);
-        }
-    };
 
     const handleSelectAll = () => {
         if (selectedItems.size === cartItems.data.length) {
@@ -141,8 +74,6 @@ function CartPage() {
             .filter(item => selectedItems.has(item.uid))
             .reduce((sum, item) => sum + item.performancePrice, 0);
     };
-
-
 
     if (isLoading) {
         return (
@@ -193,7 +124,7 @@ function CartPage() {
                     ) : (
                         <div className="space-y-4">
                             {pendingOrders.data.map(item => (
-                                <OrderPendingItem key={item.uid} item={item} />
+                                <OrderPendingItem key={item.uid} item={item} price={price} />
                             ))}
                         </div>
                     )}
@@ -202,13 +133,11 @@ function CartPage() {
 
             {/* 하단 결제 바 */}
             {selectedItems.size > 0 && (
-                <PaymentBar selectedItems={selectedItems} price={getTotalPrice()} openModal={openModal} />
+                <PaymentBar selectedItems={selectedItems} price={price} openModal={openModal} />
             )}
 
             {/* 모달 창 */}
-            <OrderModal isModalOpen={isModalOpen} widgets={widgets} ready={ready} closeModal={closeModal} />
-
-
+            <OrderModal isModalOpen={isModalOpen} closeModal={closeModal} price={price} />
 
             <Footer />
         </div>
