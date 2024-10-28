@@ -3,6 +3,7 @@ import Header from "../../components/Header"
 import OrderHistory from "./components/OrderHistory"
 import UserInfo from "./components/UserInfo"
 
+
 function MyPage() {
     return (
         <>

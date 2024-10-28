@@ -29,6 +29,15 @@ export default {
             }
         });
 
+    },
+
+    getOrders: (cursor) => {
+        return authAxios.get('/api/orders', {
+            headers: {
+                'accept': '*/*'
+            },
+            params: cursor ? { cursor } : {} // cursor가 있을 때만 파라미터로 전달
+        });
     }
 
 }
