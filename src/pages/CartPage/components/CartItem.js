@@ -1,3 +1,4 @@
+
 export default ({ item, selectedItems, setSelectedItems }) => {
     const handleSelectItem = (uid) => {
         setSelectedItems(prev => {
@@ -12,9 +13,8 @@ export default ({ item, selectedItems, setSelectedItems }) => {
     };
 
     return (
-
-
         <div className="bg-neutral-800 rounded-lg overflow-hidden flex">
+
             <input
                 type="checkbox"
                 checked={selectedItems.has(item.uid)}
@@ -35,5 +35,7 @@ export default ({ item, selectedItems, setSelectedItems }) => {
                 </div>
             </div>
         </div>
+
+
     )
 };

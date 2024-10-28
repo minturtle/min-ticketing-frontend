@@ -1,12 +1,13 @@
 import { X } from "lucide-react";
 import { loadTossPayments, ANONYMOUS } from "@tosspayments/tosspayments-sdk";
 import { useEffect, useState } from "react";
+import orderService from "../../../service/orderService";
 
 
 const clientKey = "test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm";
 const customerKey = "abcd";
 
-function OrderModal({ isModalOpen, closeModal, price }) {
+function OrderModal({ isModalOpen, closeModal, price, count, carts }) {
     const [amount, setAmount] = useState({
         currency: "KRW",
         value: 50000,
@@ -89,12 +90,10 @@ function OrderModal({ isModalOpen, closeModal, price }) {
 
     const doOrder = async () => {
         try {
-            // ------ '결제하기' 버튼 누르면 결제창 띄우기 ------
-            // 결제를 요청하기 전에 orderId, amount를 서버에 저장하세요.
-            // 결제 과정에서 악의적으로 결제 금액이 바뀌는 것을 확인하는 용도입니다.
+            const orderInfo = await orderService.createCartInfo([...carts])
             await widgets.requestPayment({
-                orderId: "FusKMCljO5--k4t6NBP0J",
-                orderName: "토스 티셔츠 외 2건",
+                orderId: orderInfo.data.orderId,
+                orderName: `공연 좌석 ${count}건`,
                 successUrl: window.location.origin + "/success",
                 failUrl: window.location.origin + "/fail",
             });

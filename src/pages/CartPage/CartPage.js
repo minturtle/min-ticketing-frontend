@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import CartItem from './components/CartItem';
-import OrderPendingItem from './components/OrderPendingItem';
 import orderService from '../../service/orderService';
 import PaymentBar from './components/PaymentBar';
 import OrderModal from './components/OrderModal';
@@ -12,7 +11,6 @@ import OrderModal from './components/OrderModal';
 
 function CartPage() {
     const [cartItems, setCartItems] = useState({ data: [] });
-    const [pendingOrders, setPendingOrders] = useState({ data: [], cursor: null });
     const [selectedItems, setSelectedItems] = useState(new Set());
     const [isLoading, setIsLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 추가
@@ -22,23 +20,8 @@ function CartPage() {
         const fetchData = async () => {
             try {
                 setIsLoading(true);
-
                 const cartData = await orderService.getCarts();
-                const dummyPendingData = {
-                    cursor: null,
-                    data: [
-                        {
-                            uid: "pending1",
-                            name: "재즈 페스티벌 2024",
-                            performanceImage: "https://via.placeholder.com/300x200.png?text=Jazz+Festival",
-                            totalPrice: 80000,
-                            orderedTime: "2024-01-17T10:00:00.000Z"
-                        }
-                    ]
-                };
-
                 setCartItems(cartData.data);
-                setPendingOrders(dummyPendingData);
             } catch (error) {
                 console.error('데이터 조회 실패:', error);
             } finally {
@@ -114,21 +97,6 @@ function CartPage() {
                         </div>
                     )}
                 </div>
-
-                <div>
-                    <h2 className="text-2xl font-bold mb-6">결제 대기 중</h2>
-                    {pendingOrders.data.length === 0 ? (
-                        <div className="text-center py-8 bg-neutral-800 rounded-lg text-gray-400">
-                            결제 대기 중인 주문이 없습니다.
-                        </div>
-                    ) : (
-                        <div className="space-y-4">
-                            {pendingOrders.data.map(item => (
-                                <OrderPendingItem key={item.uid} item={item} price={price} />
-                            ))}
-                        </div>
-                    )}
-                </div>
             </main>
 
             {/* 하단 결제 바 */}
@@ -137,7 +105,7 @@ function CartPage() {
             )}
 
             {/* 모달 창 */}
-            <OrderModal isModalOpen={isModalOpen} closeModal={closeModal} price={price} />
+            <OrderModal isModalOpen={isModalOpen} closeModal={closeModal} price={price} count={selectedItems.size} carts={selectedItems} />
 
             <Footer />
         </div>
