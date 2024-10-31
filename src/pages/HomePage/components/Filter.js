@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import performanceService from "../../../service/performanceService";
 
-function Filter() {
+function Filter({setPerformances, setCursor}) {
     const [regions, setRegions] = useState([]);
     const [formData, setFormData] = useState({
         keyword: '',
@@ -50,7 +50,8 @@ function Filter() {
             // 검색 API 호출
             const result = await performanceService.search(searchParams);
 
-            console.log(result.data)
+            setCursor(result.data.cursor)
+            setPerformances(result.data.data)
             
         } catch (error) {
             console.error('검색 중 오류 발생:', error);
