@@ -1,13 +1,15 @@
 // utils/axiosConfig.js
 import axios from 'axios';
 
+const baseUrl = process.env.REACT_APP_BASE_URL
+
 export const authAxios = axios.create({
-    baseURL: 'http://localhost:8080',
+    baseURL: baseUrl,
     withCredentials: true
 });
 
 export const publicAxios = axios.create({
-    baseURL: 'http://localhost:8080',
+    baseURL: baseUrl,
     withCredentials: true
 });
 

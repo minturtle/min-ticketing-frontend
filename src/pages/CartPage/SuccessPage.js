@@ -20,13 +20,13 @@ function OrderSuccessPage() {
 
             const response = await orderService.confirmOrder(requestData)
 
-            if (!response.ok) {
+            if (response.status !== 200) {
                 throw Error();
             }
         }
 
         confirm()
-            .catch(() => {
+            .catch((e) => {
                 alert("결제에 실패했습니다.")
                 navigate("/")
             });

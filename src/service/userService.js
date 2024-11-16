@@ -27,5 +27,15 @@ export default {
 
     getToken: () => {
         return localStorage.getItem('token');
+    },
+
+    sendEmail: (email) => {
+        const response = publicAxios.post('api/user/new/email', {
+            email
+        });
+    },
+
+    getUserInfo: () => {
+        return authAxios.get('api/user/info');
     }
 };

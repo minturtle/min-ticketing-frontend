@@ -18,7 +18,6 @@ function HomePage() {
             setLoading(true);
             const response = await performanceService.getList(currentCursor);
             const { data, cursor: nextCursor } = response.data;
-
             setPerformances(prev => [...prev, ...data]);
             setCursor(nextCursor);
             setHasMore(!!nextCursor);
@@ -63,7 +62,7 @@ function HomePage() {
             <Header />
             <Hero />
             <main className="container">
-                <Filter setPerformances={setPerformances} setCursor={setCursor}/>
+                <Filter setPerformances={setPerformances} setCursor={setCursor} />
                 <PerformList
                     performances={performances}
                     observerTarget={observerTarget}

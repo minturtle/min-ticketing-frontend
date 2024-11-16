@@ -27,12 +27,18 @@ function CartPage() {
                 setIsLoading(false);
             }
         };
-        fetchData()
-    }, [])
+        fetchData();
+    }, []);
 
     useEffect(() => {
-        setPrice(getTotalPrice())
-    }, [selectedItems])
+        const getTotalPrice = () => {
+            return cartItems.data
+                .filter(item => selectedItems.has(item.uid))
+                .reduce((sum, item) => sum + item.performancePrice, 0);
+        };
+
+        setPrice(getTotalPrice());
+    }, [selectedItems, cartItems.data]); // cartItems.data 추가
 
     const openModal = () => {
         setIsModalOpen(true); // 모달 열기
@@ -42,19 +48,12 @@ function CartPage() {
         setIsModalOpen(false); // 모달 닫기
     };
 
-
     const handleSelectAll = () => {
         if (selectedItems.size === cartItems.data.length) {
             setSelectedItems(new Set());
         } else {
             setSelectedItems(new Set(cartItems.data.map(item => item.uid)));
         }
-    };
-
-    const getTotalPrice = () => {
-        return cartItems.data
-            .filter(item => selectedItems.has(item.uid))
-            .reduce((sum, item) => sum + item.performancePrice, 0);
     };
 
     if (isLoading) {

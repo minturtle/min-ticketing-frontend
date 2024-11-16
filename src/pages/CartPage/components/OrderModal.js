@@ -2,10 +2,10 @@ import { X } from "lucide-react";
 import { loadTossPayments, ANONYMOUS } from "@tosspayments/tosspayments-sdk";
 import { useEffect, useState } from "react";
 import orderService from "../../../service/orderService";
+import userService from "../../../service/userService";
 
 
-const clientKey = "test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm";
-const customerKey = "abcd";
+const clientKey = process.env.REACT_APP_TOSS_CLIENT_API_KEY;
 
 function OrderModal({ isModalOpen, closeModal, price, count, carts }) {
     const [amount, setAmount] = useState({
@@ -14,8 +14,21 @@ function OrderModal({ isModalOpen, closeModal, price, count, carts }) {
     });
     const [ready, setReady] = useState(false);
     const [widgets, setWidgets] = useState(null);
+    const [customerKey, setCustomerKey] = useState(null)
 
     useEffect(() => {
+        async function getUserInfo() {
+            let userInfo = await userService.getUserInfo()
+
+            setCustomerKey(userInfo.data.id)
+        }
+        getUserInfo()
+    }, [])
+
+    useEffect(() => {
+        if (customerKey == null) {
+            return
+        }
         async function fetchPaymentWidgets() {
             try {
                 // ------  SDK 초기화 ------

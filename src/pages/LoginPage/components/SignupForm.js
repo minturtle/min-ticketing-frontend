@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import userService from '../../../service/userService';
 
 
 function SignupForm() {
     const [step, setStep] = useState(1);
-
 
     return (
         <form id="signup-form">
@@ -25,6 +25,19 @@ function SignupForm() {
 }
 
 function Step1Form({ setStep }) {
+    const [email, setEmail] = useState("")
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
+        try {
+            const response = await userService.sendEmail(email)
+            setStep(2)
+        } catch (error) {
+            console.error('Error submitting email:', error);
+        }
+    };
+
     return (
         <div id="signup-step1">
             <div className="mb-6">
@@ -34,12 +47,14 @@ function Step1Form({ setStep }) {
                     id="signup-email"
                     required
                     className="w-full p-2 border border-neutral-600 bg-neutral-800 text-white rounded"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                 />
             </div>
             <button
                 type="button"
                 className="w-full py-3 bg-yellow-400 text-neutral-900 rounded font-bold hover:bg-yellow-300 transition-colors duration-300"
-                onClick={() => setStep(2)}
+                onClick={(e) => handleSubmit(e)}
             >
                 인증 코드 발송
             </button>
