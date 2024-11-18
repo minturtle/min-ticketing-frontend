@@ -32,6 +32,7 @@ function PerformanceChooseInput({ performanceId, dateInfo }) {
 
             <div className="space-y-2">
                 {dateInfo.map((info) => {
+                    console.log(info.uid)
                     const { date, time } = formatDate(info.dateTime);
                     const isPast = new Date(info.dateTime) < new Date(); // 현재 시각과 showtime 비교
                     return (

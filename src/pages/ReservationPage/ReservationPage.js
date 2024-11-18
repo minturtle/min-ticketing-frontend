@@ -12,6 +12,8 @@ import performanceService from '../../service/performanceService';
 
 
 function ReservationPage() {
+    const navigate = useNavigate()
+
     const [selectedSeat, setSelectedSeat] = useState(null);
     const [reservation, setReservation] = useState({
         dateUid: null,
@@ -21,21 +23,27 @@ function ReservationPage() {
     const [seats, setSeats] = useState([])
 
     const [toast, setToast] = useState(null);  // { message: string, type: 'success' | 'error' }
-    const navigate = useNavigate();
     const { performanceId, dateId } = useParams();
 
     useEffect(() => {
         const fetchSeatsData = async () => {
             try {
                 const response = await performanceService.getSeatsInfo(performanceId, dateId);
+
                 const reservationData = response.data; // API 응답에서 data 추출
 
                 const { seats: seatsData, ...reservationWithoutSeats } = reservationData;
                 setReservation(reservationWithoutSeats);
                 setSeats(groupSeatsByRow(seatsData));
             } catch (error) {
-                console.error('Failed to fetch seats:', error);
-                // 에러 처리 (예: 토스트 메시지 표시)
+                if (error.response) {
+                    if (error.response.status === 400 || error.response.status === 404) {
+                        alert(error.response.data.message);
+                        navigate("/");
+                        return;
+                    }
+                }
+
                 setToast({
                     message: '좌석 정보를 불러오는데 실패했습니다.',
                     type: 'error'
