@@ -129,7 +129,7 @@ function Filter({ setPerformances, setSearchParams }) {
                     >
                         <option value="">지역 선택</option>
                         {regions.map(region =>
-                            <option key={region.uid} value={region.uid}>
+                            <option key={region.uid} value={region.name}>
                                 {region.name}
                             </option>
                         )}
