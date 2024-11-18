@@ -1,7 +1,25 @@
 // components/Header.jsx
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import userService from "../service/userService"
+
+
+const CustomLink = ({ to, children, ...props }) => {
+    const location = useLocation();
+
+    const handleClick = (e) => {
+        if (to === "/" && location.pathname === "/") {
+            e.preventDefault();
+            window.location.href = "/";
+        }
+    };
+
+    return (
+        <Link to={to} onClick={handleClick} {...props}>
+            {children}
+        </Link>
+    );
+};
 
 function Header() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -21,9 +39,9 @@ function Header() {
     return (
         <header className="bg-neutral-900/80 fixed w-full top-0 z-[1000] py-4">
             <div className="container mx-auto px-4 flex justify-between items-center">
-                <Link to="/" className="text-2xl font-bold text-yellow-400 no-underline">
+                <CustomLink to="/" className="text-2xl font-bold text-yellow-400 no-underline">
                     MinTicketing
-                </Link>
+                </CustomLink>
                 <nav>
                     <ul className="flex list-none p-0">
                         {isLoggedIn ? (
