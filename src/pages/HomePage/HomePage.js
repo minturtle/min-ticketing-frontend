@@ -62,7 +62,11 @@ function HomePage() {
             <Header />
             <Hero />
             <main className="container">
-                <Filter setPerformances={setPerformances} setCursor={setCursor} />
+                <Filter
+                    setPerformances={setPerformances}
+                    setCursor={setCursor}
+                    setHasMore={setHasMore}
+                />
                 <PerformList
                     performances={performances}
                     observerTarget={observerTarget}
