@@ -1,7 +1,6 @@
 import PerformanceChooseInput from './ChooseInput';
 
 function PerformanceInfo({ performanceData }) {
-    console.log(performanceData)
     const formatPrice = (price) => {
         return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     };
