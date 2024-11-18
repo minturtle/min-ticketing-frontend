@@ -10,6 +10,8 @@ function HomePage() {
     const [performances, setPerformances] = useState([]);
     const [cursor, setCursor] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [searchParams, setSearchParams] = useState(null);
+
     const [hasMore, setHasMore] = useState(true);
     const observerTarget = useRef(null);
 
@@ -28,6 +30,22 @@ function HomePage() {
         }
     };
 
+    const fetchSearch = async () => {
+        try {
+            setLoading(true);
+
+            const response = await performanceService.search(searchParams);
+            const { data, cursor: nextCursor } = response.data;
+            setPerformances(prev => [...prev, ...data]);
+            setCursor(nextCursor);
+            setHasMore(!!nextCursor);
+        } catch (error) {
+            console.error('Failed to fetch performances:', error);
+        } finally {
+            setLoading(false);
+        }
+    }
+
     useEffect(() => {
         fetchPerformances(null);
     }, []);
@@ -36,9 +54,15 @@ function HomePage() {
     useEffect(() => {
         const handleObserver = (entries) => {
             const [target] = entries;
-            if (target.isIntersecting && hasMore && !loading) {
-                fetchPerformances(cursor);
+            if (!target.isIntersecting || !hasMore || loading) {
+                return;
             }
+            if (searchParams) {
+                fetchSearch();
+                return;
+            }
+            fetchPerformances(cursor);
+
         };
 
         const observer = new IntersectionObserver(handleObserver, {
@@ -64,8 +88,8 @@ function HomePage() {
             <main className="container">
                 <Filter
                     setPerformances={setPerformances}
-                    setCursor={setCursor}
                     setHasMore={setHasMore}
+                    setSearchParams={setSearchParams}
                 />
                 <PerformList
                     performances={performances}

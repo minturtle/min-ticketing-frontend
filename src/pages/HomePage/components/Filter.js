@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import performanceService from "../../../service/performanceService";
 
-function Filter({setPerformances, setCursor}) {
+function Filter({ setPerformances, setSearchParams }) {
     const [regions, setRegions] = useState([]);
     const [formData, setFormData] = useState({
         keyword: '',
@@ -29,7 +29,7 @@ function Filter({setPerformances, setCursor}) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
+
         try {
             // 검색 파라미터 객체 생성
             const searchParams = {
@@ -50,9 +50,8 @@ function Filter({setPerformances, setCursor}) {
             // 검색 API 호출
             const result = await performanceService.search(searchParams);
 
-            setCursor(result.data.cursor)
             setPerformances(result.data.data)
-            
+            setSearchParams({ ...searchParams, cursor: result.data.cursor })
         } catch (error) {
             console.error('검색 중 오류 발생:', error);
         }
@@ -129,7 +128,7 @@ function Filter({setPerformances, setCursor}) {
                         className="w-full bg-neutral-900 border border-yellow-400 text-white p-2 rounded"
                     >
                         <option value="">지역 선택</option>
-                        {regions.map(region => 
+                        {regions.map(region =>
                             <option key={region.uid} value={region.uid}>
                                 {region.name}
                             </option>

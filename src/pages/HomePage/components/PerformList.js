@@ -7,6 +7,22 @@ function PerformList({ performances, observerTarget, loading }) {
     // 로딩 중이 아니면서 공연이 없는 경우에만 메시지 표시
     const shouldShowEmptyMessage = noPerformances && !loading;
 
+
+    if (shouldShowEmptyMessage) {
+        return (
+            <div className="col-span-full flex flex-col items-center justify-center py-16">
+                <div className="text-6xl mb-4">🎭</div>
+                <h3 className="text-xl font-bold text-yellow-400 mb-2">
+                    등록된 공연이 없습니다
+                </h3>
+                <p className="text-neutral-400 text-center">
+                    현재 예매 가능한 공연이 없습니다.<br />
+                    나중에 다시 확인해 주세요.
+                </p>
+            </div>
+        )
+    }
+
     return (
         <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 pb-16">
             {performances?.map(performance => (
@@ -20,19 +36,6 @@ function PerformList({ performances, observerTarget, loading }) {
                     endDate={performance.endDate}
                 />
             ))}
-
-            {shouldShowEmptyMessage && (
-                <div className="col-span-full flex flex-col items-center justify-center py-16">
-                    <div className="text-6xl mb-4">🎭</div>
-                    <h3 className="text-xl font-bold text-yellow-400 mb-2">
-                        등록된 공연이 없습니다
-                    </h3>
-                    <p className="text-neutral-400 text-center">
-                        현재 예매 가능한 공연이 없습니다.<br />
-                        나중에 다시 확인해 주세요.
-                    </p>
-                </div>
-            )}
 
             {loading && (
                 <div className="col-span-full text-center py-4">
