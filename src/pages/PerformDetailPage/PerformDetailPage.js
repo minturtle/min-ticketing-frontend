@@ -1,7 +1,7 @@
 
 
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 
@@ -10,6 +10,7 @@ import PerformanceDesc from './components/PerformanceDesc';
 import performanceService from '../../service/performanceService';
 
 function PerformDetailPage() {
+    const navigate = useNavigate()
     const { id } = useParams();
     const [performance, setPerformance] = useState({
         uid: "",
@@ -31,7 +32,8 @@ function PerformDetailPage() {
                 const response = await performanceService.getPerformanceDetail(id);
                 setPerformance(response.data);
             } catch (error) {
-                console.error('Failed to fetch performance details:', error);
+                alert(error.response.data.message)
+                navigate("/")
             } finally {
                 setLoading(false);
             }
